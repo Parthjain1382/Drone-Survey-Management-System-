@@ -48,16 +48,18 @@ export class LoginComponent {
       this.isLoading = true;
       this.errorMessage = '';
 
-      // this.authService.login(this.loginForm.value).subscribe({
-      //   next: (response) => {
-      //     this.isLoading = false;
-      //     this.router.navigate(['/dashboard']);
-      //   },
-      //   error: (error) => {
-      //     this.isLoading = false;
-      //     this.errorMessage = error.error.message || 'Login failed. Please try again.';
-      //   }
-      // });
+      this.authService.loginUser(this.loginForm.value).subscribe({
+        next: (response) => {
+          console.log(response);
+          this.authService.saveLoginResponse(response);
+          this.isLoading = false;
+          this.router.navigate(['/dashboard']);
+        },
+        error: (error) => {
+          this.isLoading = false;
+          this.errorMessage = error.error.message || 'Login failed. Please try again.';
+        }
+      });
     }
   }
 }

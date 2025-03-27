@@ -5,21 +5,6 @@ import { AuthService } from '../../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 
-interface LoginResponse {
-  token: string;
-  user: {
-    id: string;
-    email: string;
-    role: string;
-  };
-}
-
-interface LoginError {
-  error: {
-    message: string;
-  };
-}
-
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -48,16 +33,16 @@ export class LoginComponent {
       this.isLoading = true;
       this.errorMessage = '';
 
-      // this.authService.login(this.loginForm.value).subscribe({
-      //   next: (response) => {
-      //     this.isLoading = false;
-      //     this.router.navigate(['/dashboard']);
-      //   },
-      //   error: (error) => {
-      //     this.isLoading = false;
-      //     this.errorMessage = error.error.message || 'Login failed. Please try again.';
-      //   }
-      // });
+      this.authService.loginUser(this.loginForm.value).subscribe({
+        next: (response) => {
+          this.isLoading = false;
+          this.router.navigate(['/dashboard']);
+        },
+        error: (error) => {
+          this.isLoading = false;
+          this.errorMessage = error.error.message || 'Login failed. Please try again.';
+        }
+      });
     }
   }
 }

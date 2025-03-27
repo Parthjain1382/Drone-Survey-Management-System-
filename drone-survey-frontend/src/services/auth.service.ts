@@ -1,15 +1,37 @@
 import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../environments/environment';
+
+interface LoginResponse {
+  token: string;
+  user: {
+    id: string;
+    email: string;
+    role: string;
+  };
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private router = inject(Router);
+  private http = inject(HttpClient);
+  private apiUrl = environment.apiUrl;
 
-  login(token: string) {
-    localStorage.setItem('token', token);
+
+  loginUser(credentials: { email: string; password: string }): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(`${this.apiUrl}/api/users/login`, credentials);
   }
+
+  saveLoginResponse(response: LoginResponse) {
+    if (response && response.token) {
+      localStorage.setItem('token', response.token);
+    }
+  }
+
 
   isLoggedIn(): boolean {
     return !!localStorage.getItem('token');
@@ -21,6 +43,7 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     this.router.navigate(['/login']);
   }
 }
