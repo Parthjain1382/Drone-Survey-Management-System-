@@ -8,7 +8,7 @@ const droneSchema = new mongoose.Schema({
         enum: ["Available", "InMission", "Maintenance"], 
         default: "Available" 
     },
-    batteryLevel: { type: Number, required: true }, // Battery percentage
+    batteryLevel: { type: Number, required: true, default: 100 }, // Battery percentage
     lastMission: { type: mongoose.Schema.Types.ObjectId, ref: "Mission" },
 }, { timestamps: true });
 
