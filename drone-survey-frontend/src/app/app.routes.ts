@@ -4,13 +4,15 @@ import { DronesComponent } from '../components/components/drones/drones.componen
 import { MissionsComponent } from '../components/components/missions/missions.component';
 import { ReportsComponent } from '../components/components/reports/reports.component';
 import { LoginComponent } from '../components/login/login.component';
+import { RegisterComponent } from '../components/register/register.component';
 import { authGuard } from '../guards/auth.guard';
 
-
 export const routes: Routes = [
-  { path: '', component: DashboardComponent, canActivate: [authGuard] },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
   { path: 'drones', component: DronesComponent, canActivate: [authGuard] },
   { path: 'missions', component: MissionsComponent, canActivate: [authGuard] },
   { path: 'reports', component: ReportsComponent, canActivate: [authGuard] },
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent }
 ];
