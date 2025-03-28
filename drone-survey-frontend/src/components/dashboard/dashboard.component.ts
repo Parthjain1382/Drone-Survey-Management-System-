@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { DronesService } from '../../services/drones.service';
 
 interface SummaryCard {
   title: string;
@@ -21,10 +22,9 @@ interface RecentActivity {
 }
 
 interface DroneStatus {
-  id: string;
   name: string;
   status: 'Available' | 'InMission' | 'Maintenance';
-  battery: number;
+  batteryLevel: number;
   lastActive: string;
 }
 
@@ -35,11 +35,14 @@ interface DroneStatus {
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
+  droneStatuses: DroneStatus[] = [
+  ];
+
   summaryCards: SummaryCard[] = [
     {
       title: 'Total Drones',
-      count: 12,
+      count: this.droneStatuses.length,
       icon: 'precision_manufacturing',
       color: '#2196F3',
       route: '/home/drones'
@@ -57,7 +60,8 @@ export class DashboardComponent {
       icon: 'assessment',
       color: '#FF9800',
       route: '/home/reports'
-    }
+    },
+
   ];
 
   recentActivities: RecentActivity[] = [
@@ -96,32 +100,32 @@ export class DashboardComponent {
       timestamp: '1 day ago',
       icon: 'assessment',
       color: '#FF9800'
+    },
+    {
+      id: 4,
+      type: 'report',
+      title: 'Monthly Performance Report',
+      status: 'Pending Review',
+      timestamp: '1 day ago',
+      icon: 'assessment',
+      color: '#FF9800'
     }
   ];
 
-  droneStatuses: DroneStatus[] = [
-    {
-      id: 'DRN001',
-      name: 'Survey Drone Alpha',
-      status: 'Available',
-      battery: 85,
-      lastActive: '5 minutes ago'
-    },
-    {
-      id: 'DRN002',
-      name: 'Survey Drone Beta',
-      status: 'Maintenance',
-      battery: 45,
-      lastActive: '2 hours ago'
-    },
-    {
-      id: 'DRN003',
-      name: 'Survey Drone Gamma',
-      status: 'InMission',
-      battery: 75,
-      lastActive: '1 day ago'
-    }
-  ];
+
+  constructor(private droneService: DronesService) {}
+
+  ngOnInit(): void {
+    this.droneService.getDrones().subscribe((drones: any[]) => {
+      this.summaryCards[0].count = drones.length;
+      this.droneStatuses = drones.map((drone: any) => ({
+        name: drone.name,
+        status: drone.status as 'Available' | 'InMission' | 'Maintenance',
+        batteryLevel: drone.batteryLevel,
+        lastActive: drone.lastActive ? new Date(drone.lastMission).toLocaleString() : 'Never'
+      }));
+    })
+  }
 
   getStatusColor(status: string): string {
     switch (status) {
@@ -132,9 +136,9 @@ export class DashboardComponent {
     }
   }
 
-  getBatteryColor(battery: number): string {
-    if (battery >= 80) return '#4CAF50';
-    if (battery >= 40) return '#FF9800';
+  getBatteryColor(batteryLevel: number): string {
+    if (batteryLevel >= 80) return '#4CAF50';
+    if (batteryLevel >= 40) return '#FF9800';
     return '#F44336';
   }
 }

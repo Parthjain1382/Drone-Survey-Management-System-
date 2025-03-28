@@ -1,0 +1,29 @@
+.dialog-content{
+  background-color: #1e3c72;
+}
+.dialog-title{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  padding: 12px;
+  background-color: #1e3c72;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 15px;
+}
+mat-dialog-actions {
+  justify-content: flex-end;
+}
+
+.error-message {
+  color: #f44336;
+  background-color: #ffebee;
+  padding: 12px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  border: 1px solid #ffcdd2;
+}

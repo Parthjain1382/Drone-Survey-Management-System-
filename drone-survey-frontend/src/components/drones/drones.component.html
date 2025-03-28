@@ -1,7 +1,7 @@
 <div class="drones-container">
   <div class="drones-header">
     <h1>Manage Drones</h1>
-    <button class="add-drone-btn">
+    <button class="add-drone-btn" (click)="openAddDroneDialog()">
       <span class="material-icons">add</span>
       Add New Drone
     </button>
@@ -15,9 +15,6 @@
           <span class="status-text">{{ drone.status }}</span>
         </div>
         <div class="drone-actions">
-          <button class="action-btn edit">
-            <span class="material-icons">edit</span>
-          </button>
           <button class="action-btn assign" [disabled]="drone.status !== 'Available'">
             <span class="material-icons">flight</span>
           </button>
@@ -29,9 +26,9 @@
       </div>
 
       <div class="drone-footer">
-        <div class="battery-info" [style.color]="getBatteryColor(drone.battery)">
+        <div class="battery-info" [style.color]="getBatteryColor(drone.batteryLevel)">
           <span class="material-icons">battery_charging_full</span>
-          <span>{{ drone.battery }}%</span>
+          <span>{{ drone.batteryLevel }}%</span>
         </div>
         <div class="last-active">
           Last active: {{ drone.lastActive }}

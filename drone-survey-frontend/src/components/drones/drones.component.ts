@@ -1,11 +1,14 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { AddDroneDialogComponent } from './add-drone-dialog/add-drone-dialog.component';
+import { DronesService } from '../../services/drones.service';
 
 interface Drone {
   name: string;
   status: 'Available' | 'InMission' | 'Maintenance';
-  battery: number;
+  batteryLevel: number;
   lastActive: string;
 }
 
@@ -16,33 +19,37 @@ interface Drone {
   templateUrl: './drones.component.html',
   styleUrl: './drones.component.scss'
 })
-export class DronesComponent {
-  drones: Drone[] = [
-    {
-      name: 'Survey Drone Alpha',
-      status: 'Available',
-      battery: 85,
-      lastActive: '5 minutes ago'
-    },
-    {
-      name: 'Survey Drone Alpha',
-      status: 'Available',
-      battery: 85,
-      lastActive: '5 minutes ago'
-    },
-    {
-      name: 'Survey Drone Beta',
-      status: 'Maintenance',
-      battery: 45,
-      lastActive: '2 hours ago'
-    },
-    {
-      name: 'Survey Drone Gamma',
-      status: 'InMission',
-      battery: 75,
-      lastActive: '1 day ago'
-    }
-  ];
+export class DronesComponent implements OnInit{
+  drones: Drone[] =  [];
+
+  constructor(private dialog: MatDialog, private droneService: DronesService) {}
+
+  ngOnInit(): void {
+    this.droneService.getDrones().subscribe((drones: any[]) => {
+      this.drones = drones.map((drone: any) => ({
+        name: drone.name,
+        status: drone.status as 'Available' | 'InMission' | 'Maintenance',
+        batteryLevel: drone.batteryLevel,
+        lastActive: drone.lastActive ? new Date(drone.lastMission).toLocaleString() : 'Never'
+      }));
+    });
+  }
+
+  openAddDroneDialog() {
+    const dialogRef = this.dialog.open(AddDroneDialogComponent, {
+      width: '500px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Add the new drone to the list
+        this.drones.push({
+          ...result,
+          lastActive: 'Just now'
+        });
+      }
+    });
+  }
 
   getStatusIcon(status: string): string {
     switch (status) {

@@ -155,6 +155,28 @@
 }
 
 .activity-list {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 8px;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #90caf9;
+    border-radius: 3px;
+
+    &:hover {
+      background: #64b5f6;
+    }
+  }
+
   .activity-item {
     display: flex;
     align-items: flex-start;
@@ -213,60 +235,85 @@
 }
 
 .drone-list {
-  .drone-item {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 8px;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #90caf9;
+    border-radius: 3px;
+
+    &:hover {
+      background: #64b5f6;
+    }
+  }
+}
+
+.drone-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: white;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .drone-info {
+    h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1e3c72;
+      margin: 0 0 8px 0;
+    }
+
+    .last-active {
+      font-size: 0.8rem;
+      color: #999;
+      margin: 0;
+    }
+  }
+
+  .drone-status {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 16px 0;
-    border-bottom: 1px solid #eee;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-end;
 
-    &:last-child {
-      border-bottom: none;
-    }
-
-    .drone-info {
-      h4 {
-        font-size: 1rem;
-        font-weight: 600;
-        color: #1e3c72;
-        margin: 0 0 8px 0;
-      }
-
-      .last-active {
-        font-size: 0.8rem;
-        color: #999;
-        margin: 0;
-      }
-    }
-
-    .drone-status {
+    .battery-info {
       display: flex;
-      flex-direction: column;
-      gap: 8px;
-      align-items: flex-end;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #1e3c72;
 
-      .battery-info {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        font-size: 0.9rem;
-        font-weight: 500;
-        color: #1e3c72;
-
-        .material-icons {
-          font-size: 18px;
-        }
+      .material-icons {
+        font-size: 18px;
       }
+    }
 
-      .status-badge {
-        display: inline-block;
-        padding: 4px 12px;
-        border-radius: 4px;
-        color: white;
-        font-size: 0.85rem;
-        font-weight: 500;
-        text-transform: capitalize;
-      }
+    .status-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 4px;
+      color: white;
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-transform: capitalize;
     }
   }
 }
