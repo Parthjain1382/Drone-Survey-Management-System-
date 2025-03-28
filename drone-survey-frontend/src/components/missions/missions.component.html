@@ -1,1 +1,17 @@
-<p>missions works!</p>
+<div class="header-container">
+  <div class="header-title">
+    <h1 class="mission-title">All Missions</h1>
+    <p class="mission-subtitle">Explore and manage your ongoing missions</p>
+  </div>
+  <div class="header-actions">
+    <button
+      mat-raised-button
+      class="create-mission-btn"
+      color="primary"
+      (click)="openCreateMissionDialog()"
+    >
+      <span class="material-icons btn-icon">add_circle_outline</span>
+      Create Mission
+    </button>
+  </div>
+</div>
