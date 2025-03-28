@@ -1,1 +1,42 @@
-<p>drones works!</p>
+<div class="drones-container">
+  <div class="drones-header">
+    <h1>Manage Drones</h1>
+    <button class="add-drone-btn">
+      <span class="material-icons">add</span>
+      Add New Drone
+    </button>
+  </div>
+
+  <div class="drones-grid">
+    <div *ngFor="let drone of drones" class="drone-card">
+      <div class="drone-header">
+        <div class="drone-status" [style.background-color]="getStatusColor(drone.status)">
+          <span class="status-icon">{{ getStatusIcon(drone.status) }}</span>
+          <span class="status-text">{{ drone.status }}</span>
+        </div>
+        <div class="drone-actions">
+          <button class="action-btn edit">
+            <span class="material-icons">edit</span>
+          </button>
+          <button class="action-btn assign" [disabled]="drone.status !== 'Available'">
+            <span class="material-icons">flight</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="drone-info">
+        <h3>{{ drone.name }}</h3>
+      </div>
+
+      <div class="drone-footer">
+        <div class="battery-info" [style.color]="getBatteryColor(drone.battery)">
+          <span class="material-icons">battery_charging_full</span>
+          <span>{{ drone.battery }}%</span>
+        </div>
+        <div class="last-active">
+          Last active: {{ drone.lastActive }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
