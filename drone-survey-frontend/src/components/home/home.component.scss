@@ -1,0 +1,27 @@
+.home-container {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 250px;
+  background: #1e3c72;
+  color: white;
+  transition: width 0.3s ease;
+  position: relative;
+
+  &.collapsed {
+    width: 70px;
+  }
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  background: #f5f5f5;
+  transition: margin-left 0.3s ease;
+
+  &.expanded {
+    margin-left: -180px;
+  }
+}

@@ -1,1 +1,95 @@
-<p>dashboard works!</p>
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1>Dashboard Overview</h1>
+    <p class="subtitle">Welcome to your Drone Management System</p>
+  </div>
+
+  <div class="summary-cards">
+    <a
+      *ngFor="let card of summaryCards"
+      [routerLink]="card.route"
+      class="summary-card"
+      [style.--card-color]="card.color"
+    >
+      <div class="card-icon">
+        <span class="material-icons">{{ card.icon }}</span>
+      </div>
+      <div class="card-content">
+        <h3>{{ card.title }}</h3>
+        <p class="count">{{ card.count }}{{ card.title === 'Battery Level' ? '%' : '' }}</p>
+      </div>
+      <div class="card-arrow">
+        <span class="material-icons">arrow_forward</span>
+      </div>
+    </a>
+  </div>
+
+  <div class="quick-actions">
+    <h2>Quick Actions</h2>
+    <div class="action-buttons">
+      <a routerLink="/home/drones" class="action-button">
+        <span class="material-icons">add</span>
+        <span>Add New Drone</span>
+      </a>
+      <a routerLink="/home/missions" class="action-button">
+        <span class="material-icons">add_task</span>
+        <span>Create Mission</span>
+      </a>
+      <a routerLink="/home/reports" class="action-button">
+        <span class="material-icons">description</span>
+        <span>Generate Report</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="dashboard-grid">
+    <!-- Recent Activities -->
+    <div class="dashboard-section">
+      <div class="section-header">
+        <h2>Recent Activities</h2>
+        <a routerLink="/home/activities" class="view-all">View All</a>
+      </div>
+      <div class="activity-list">
+        <div *ngFor="let activity of recentActivities" class="activity-item">
+          <div class="activity-icon" [style.background-color]="activity.color">
+            <span class="material-icons">{{ activity.icon }}</span>
+          </div>
+          <div class="activity-content">
+            <div class="activity-header">
+              <h4>{{ activity.title }}</h4>
+              <span class="activity-time">{{ activity.timestamp }}</span>
+            </div>
+            <p>{{ activity.status }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Drone Status -->
+    <div class="dashboard-section">
+      <div class="section-header">
+        <h2>Drone Status</h2>
+        <a routerLink="/home/drones" class="view-all">View All</a>
+      </div>
+      <div class="drone-list">
+        <div *ngFor="let drone of droneStatuses" class="drone-item">
+          <div class="drone-info">
+            <h4>{{ drone.name }}</h4>
+            <p class="last-active">Last active: {{ drone.lastActive }}</p>
+          </div>
+          <div class="drone-status">
+            <div class="battery-info">
+              <span class="material-icons" [style.color]="getBatteryColor(drone.battery)">
+                battery_charging_full
+              </span>
+              <span>{{ drone.battery }}%</span>
+            </div>
+            <span class="status-badge" [style.background-color]="getStatusColor(drone.status)">
+              {{ drone.status }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
