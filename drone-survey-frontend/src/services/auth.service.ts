@@ -31,6 +31,9 @@ export class AuthService {
       localStorage.setItem('token', response.token);
     }
   }
+  registerUser(userData: { name: string; email: string; password: string; role: "FacilityManager" }): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/api/users/register`, userData);
+  }
 
 
   isLoggedIn(): boolean {

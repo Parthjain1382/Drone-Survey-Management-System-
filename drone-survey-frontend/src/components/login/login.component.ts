@@ -53,7 +53,7 @@ export class LoginComponent {
           console.log(response);
           this.authService.saveLoginResponse(response);
           this.isLoading = false;
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/home']);
         },
         error: (error) => {
           this.isLoading = false;

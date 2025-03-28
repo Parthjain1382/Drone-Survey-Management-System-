@@ -1,0 +1,39 @@
+<div class="home-container">
+  <!-- Sidebar -->
+  <div class="sidebar" [class.collapsed]="isSidebarCollapsed">
+    <div class="sidebar-header">
+      <span class="material-icons logo">precision_manufacturing</span>
+      <span class="title" *ngIf="!isSidebarCollapsed">Drone System</span>
+    </div>
+
+    <button class="toggle-button" (click)="toggleSidebar()">
+      <span class="material-icons">{{ isSidebarCollapsed ? 'chevron_right' : 'chevron_left' }}</span>
+    </button>
+
+    <nav class="sidebar-nav">
+      <a
+        *ngFor="let item of menuItems"
+        [routerLink]="item.path"
+        routerLinkActive="active"
+        class="nav-item"
+      >
+        <span class="material-icons">{{ item.icon }}</span>
+        <span class="nav-label" *ngIf="!isSidebarCollapsed">{{ item.label }}</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="logout-button" (click)="logout()">
+        <span class="material-icons">logout</span>
+        <span class="nav-label" *ngIf="!isSidebarCollapsed">Logout</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content" [class.expanded]="isSidebarCollapsed">
+    <div class="content-wrapper">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

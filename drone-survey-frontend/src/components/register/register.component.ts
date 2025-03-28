@@ -40,20 +40,23 @@ export class RegisterComponent {
   }
 
   onSubmit(): void {
+    console.log(this.registerForm.value);
+    console.log("onSubmit called");
     if (this.registerForm.valid) {
       this.isLoading = true;
       this.errorMessage = '';
 
-    //   this.authService.register(this.registerForm.value).subscribe({
-    //     next: (response: RegisterResponse) => {
-    //       this.isLoading = false;
-    //       this.router.navigate(['/login']);
-    //     },
-    //     error: (error) => {
-    //       this.isLoading = false;
-    //       this.errorMessage = error.error.message || 'Registration failed. Please try again.';
-    //     }
-    //   });
+      this.authService.registerUser(this.registerForm.value,).subscribe({
+        next: (response: RegisterResponse) => {
+          console.log(response);
+          this.isLoading = false;
+          this.router.navigate(['/login']);
+        },
+        error: (error) => {
+          this.isLoading = false;
+          this.errorMessage = error.error.message || 'Registration failed. Please try again.';
+        }
+      });
     }
   }
 }
