@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { DronesService } from '../../services/drones.service';
+import { MissionService } from '../../services/mission.service';
 
 interface SummaryCard {
   title: string;
@@ -42,26 +43,18 @@ export class DashboardComponent implements OnInit {
   summaryCards: SummaryCard[] = [
     {
       title: 'Total Drones',
-      count: this.droneStatuses.length,
+      count: 0,
       icon: 'precision_manufacturing',
       color: '#2196F3',
       route: '/home/drones'
     },
     {
       title: 'Total Missions',
-      count: 5,
+      count: 0,
       icon: 'flight',
       color: '#4CAF50',
       route: '/home/missions'
     },
-    {
-      title: 'All Reports',
-      count: 3,
-      icon: 'assessment',
-      color: '#FF9800',
-      route: '/home/reports'
-    },
-
   ];
 
   recentActivities: RecentActivity[] = [
@@ -113,7 +106,7 @@ export class DashboardComponent implements OnInit {
   ];
 
 
-  constructor(private droneService: DronesService) {}
+  constructor(private droneService: DronesService,private missionService: MissionService) {}
 
   ngOnInit(): void {
     this.droneService.getDrones().subscribe((drones: any[]) => {
@@ -124,6 +117,20 @@ export class DashboardComponent implements OnInit {
         batteryLevel: drone.batteryLevel,
         lastActive: drone.lastActive ? new Date(drone.lastMission).toLocaleString() : 'Never'
       }));
+    })
+
+    this.missionService.getMissions().subscribe((missions: any) => {
+        this.summaryCards[1].count = missions.length;
+
+        this.recentActivities = missions.map((mission: any) => ({
+          id: mission._id,
+          type: 'mission',
+          title: `Mission #${mission._id} ${mission.status}`,
+          status: mission.status,
+          timestamp: new Date(mission.createdAt).toLocaleString(),
+          icon: 'flight',
+          color: this.getStatusColor(mission.status)
+        }));
     })
   }
 

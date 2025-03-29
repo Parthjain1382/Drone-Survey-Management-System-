@@ -15,16 +15,16 @@ MissionRouter.post("/create", requireLogin, async (req, res) => {
           return res.status(403).json({ error: "Only Facility Managers can create a mission" });
       }
 
-      const { name, flightPath, scheduledTime, frequency, altitude, location } = req.body;
+      const { name, flightPath, scheduledTime, frequency, altitude, location,droneId,estimatedTime } = req.body;
 
       // Check for missing fields
-      if (!name || !flightPath || !scheduledTime || !frequency || !altitude || !location) {
-          console.log("Missing Fields:", { name, flightPath, scheduledTime, frequency, altitude, location });
+      if (!name || !flightPath || !scheduledTime || !frequency || !altitude || !location || !droneId || !estimatedTime) {
+          console.log("Missing Fields:", { name, flightPath, scheduledTime, frequency, altitude, location, droneId });
           return res.status(400).json({ error: "All required fields must be provided" });
       }
 
       // Create and save mission
-      const mission = new Mission({ name, flightPath, scheduledTime, frequency, altitude, location });
+      const mission = new Mission({ name, flightPath, scheduledTime, frequency, altitude, location, droneId,estimatedTime });
       await mission.save();
 
       res.status(201).json({ message: "Mission created successfully", mission });

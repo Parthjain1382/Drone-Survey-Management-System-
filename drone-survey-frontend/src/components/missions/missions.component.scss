@@ -70,3 +70,10 @@
     justify-content: center;
   }
 }
+
+.mission-tab-group{
+  ::ng-deep .mat-mdc-tab .mdc-tab__text-label:nth-child(1) {
+    color: #000000 !important;
+  }
+}
+

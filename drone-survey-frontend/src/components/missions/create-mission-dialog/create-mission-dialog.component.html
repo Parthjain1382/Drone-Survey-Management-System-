@@ -3,11 +3,20 @@
     <div class="form-group">
       <label for="name">Mission Name</label>
       <input id="name" formControlName="name" type="text" placeholder="Enter mission name" required>
+      <mat-error class="error-message" *ngIf="missionForm.get('name')?.invalid && missionForm.get('name')?.touched">
+        Name is required and must be less than 10 characters
+      </mat-error>
     </div>
 
     <div class="form-group">
       <label for="flightPath">Flight Path</label>
-      <input id="flightPath" formControlName="flightPath" type="text" placeholder="Enter flight path" required>
+      <select id="flightPath" formControlName="flightPath" required>
+        <option value="Crosshatch">Crosshatch</option>
+        <option value="Perimeter">Perimeter</option>
+      </select>
+      <mat-error class="error-message" *ngIf="missionForm.get('flightPath')?.invalid && missionForm.get('flightPath')?.touched">
+        Flight Path is required
+      </mat-error>
     </div>
 
     <div class="form-group">
@@ -16,40 +25,44 @@
     </div>
 
     <div class="form-group">
+      <label for="droneId">Available Drones</label>
+      <select id="droneId" formControlName="droneId" required>
+        <option value="">Select a drone</option>
+        <option *ngFor="let drone of allDrones" [value]="drone._id">{{drone.name}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
       <label for="altitude">Altitude (meters)</label>
-      <input id="altitude" formControlName="altitude" type="number" placeholder="Enter altitude" required>
+      <input id="altitude" formControlName="altitude" type="number" placeholder="Enter altitude" min="1" required>
+      <mat-error class="error-message" *ngIf="missionForm.get('altitude')?.invalid && missionForm.get('altitude')?.touched">
+        Altitude is required
+      </mat-error>
     </div>
 
     <div class="form-group">
       <label for="frequency">Frequency</label>
-      <input id="frequency" formControlName="frequency" type="text" placeholder="Enter frequency" required>
-    </div>
-
-    <div class="form-group">
-      <label for="sensors">Sensors</label>
-      <div *ngFor="let sensor of missionForm.get('sensors')?.value; let i = index">
-        <input [formControlName]="'sensors.' + i" type="text" placeholder="Enter sensor">
-        <button type="button" (click)="removeSensor(i)">Remove</button>
-      </div>
-      <button type="button" (click)="addSensor('')">Add Sensor</button>
-    </div>
-
-    <div class="form-group">
-      <label for="status">Status</label>
-      <select id="status" formControlName="status">
-        <option value="Scheduled">Scheduled</option>
-        <option value="In Progress">In Progress</option>
-        <option value="Completed">Completed</option>
-        <option value="Aborted">Aborted</option>
+      <select id="frequency" formControlName="frequency" required>
+        <option value="Daily">Daily</option>
+        <option value="Monthly">Monthly</option>
       </select>
+      <mat-error class="error-message" *ngIf="missionForm.get('frequency')?.invalid && missionForm.get('frequency')?.touched">
+        Frequency is required
+      </mat-error>
     </div>
+
 
     <div class="form-group">
       <label for="scheduledTime">Scheduled Time</label>
       <input id="scheduledTime" formControlName="scheduledTime" type="datetime-local" required>
     </div>
+    <div class="form-group">
+      <mat-error class="error-message" *ngIf="missionForm.get('scheduledTime')?.invalid && missionForm.get('scheduledTime')?.touched">
+        Please select a future date and time
+      </mat-error>
+    </div>
 
-    <button type="submit" [disabled]="missionForm.invalid">Submit</button>
+    <button type="submit" [disabled]="missionForm.invalid" [style.opacity]="missionForm.invalid ? '0.5' : '1'">Submit</button>
   </form>
 </div>
 

@@ -16,7 +16,6 @@ export class HomePageComponent {
     { path: '/home/dashboard', icon: 'dashboard', label: 'Dashboard' },
     { path: '/home/drones', icon: 'precision_manufacturing', label: 'Drones' },
     { path: '/home/missions', icon: 'flight', label: 'Missions' },
-    { path: '/home/reports', icon: 'assessment', label: 'Reports' }
   ];
 
   constructor(private authService: AuthService) {}
@@ -26,7 +25,7 @@ export class HomePageComponent {
   }
 
   logout() {
-    this.authService.logout();  
+    this.authService.logout();
   }
 }
 
